@@ -1,6 +1,6 @@
 ﻿namespace Anagrafica_Persone
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -42,6 +42,13 @@
             btnCancella = new Button();
             btnPulisciCampi = new Button();
             btnRicerca = new Button();
+            menuStrip1 = new MenuStrip();
+            filToolStripMenuItem = new ToolStripMenuItem();
+            menuSalva = new ToolStripMenuItem();
+            menuCarica = new ToolStripMenuItem();
+            toolStripMenuItem1 = new ToolStripSeparator();
+            menuEsci = new ToolStripMenuItem();
+            menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // txtCognome
@@ -55,9 +62,9 @@
             // 
             lstPersone.FormattingEnabled = true;
             lstPersone.ItemHeight = 36;
-            lstPersone.Location = new Point(872, 12);
+            lstPersone.Location = new Point(872, 120);
             lstPersone.Name = "lstPersone";
-            lstPersone.Size = new Size(607, 904);
+            lstPersone.Size = new Size(607, 796);
             lstPersone.TabIndex = 9;
             lstPersone.SelectedIndexChanged += lstPersone_SelectedIndexChanged;
             // 
@@ -168,7 +175,49 @@
             btnRicerca.UseVisualStyleBackColor = true;
             btnRicerca.Click += btnRicerca_Click;
             // 
-            // Form1
+            // menuStrip1
+            // 
+            menuStrip1.ImageScalingSize = new Size(32, 32);
+            menuStrip1.Items.AddRange(new ToolStripItem[] { filToolStripMenuItem });
+            menuStrip1.Location = new Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Size = new Size(1491, 44);
+            menuStrip1.TabIndex = 10;
+            menuStrip1.Text = "menuStrip1";
+            // 
+            // filToolStripMenuItem
+            // 
+            filToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { menuSalva, menuCarica, toolStripMenuItem1, menuEsci });
+            filToolStripMenuItem.Name = "filToolStripMenuItem";
+            filToolStripMenuItem.Size = new Size(74, 40);
+            filToolStripMenuItem.Text = "File";
+            // 
+            // menuSalva
+            // 
+            menuSalva.Name = "menuSalva";
+            menuSalva.Size = new Size(359, 44);
+            menuSalva.Text = "Salva con nome...";
+            menuSalva.Click += menuSalva_Click;
+            // 
+            // menuCarica
+            // 
+            menuCarica.Name = "menuCarica";
+            menuCarica.Size = new Size(359, 44);
+            menuCarica.Text = "Carica...";
+            menuCarica.Click += menuCarica_Click;
+            // 
+            // toolStripMenuItem1
+            // 
+            toolStripMenuItem1.Name = "toolStripMenuItem1";
+            toolStripMenuItem1.Size = new Size(356, 6);
+            // 
+            // menuEsci
+            // 
+            menuEsci.Name = "menuEsci";
+            menuEsci.Size = new Size(359, 44);
+            menuEsci.Text = "Esci";
+            // 
+            // MainForm
             // 
             AutoScaleDimensions = new SizeF(14F, 36F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -187,9 +236,13 @@
             Controls.Add(label1);
             Controls.Add(lstPersone);
             Controls.Add(txtCognome);
-            Name = "Form1";
+            Controls.Add(menuStrip1);
+            MainMenuStrip = menuStrip1;
+            Name = "MainForm";
             Text = "Anagrafica";
             Load += Form1_Load;
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -210,5 +263,11 @@
         private Button btnCancella;
         private Button btnPulisciCampi;
         private Button btnRicerca;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem filToolStripMenuItem;
+        private ToolStripMenuItem menuSalva;
+        private ToolStripMenuItem menuCarica;
+        private ToolStripSeparator toolStripMenuItem1;
+        private ToolStripMenuItem menuEsci;
     }
 }

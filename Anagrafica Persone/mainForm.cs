@@ -1,3 +1,5 @@
+using System.IO; // Per leggere e scrivere file
+using System.Text.Json; // Per la serializzazione JSON
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,11 +13,11 @@ using System.Windows.Forms;
 
 namespace Anagrafica_Persone
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         private List<Persona> anagrafica = new List<Persona>();
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }
@@ -150,6 +152,90 @@ namespace Anagrafica_Persone
                 txtCognome.Text = pSelezionata.Cognome;
                 dtpDataNascita.Value = pSelezionata.DataNascita;
             }
+        }
+
+        // (Questo codice va incollato dentro la classe Form1)
+
+        // --- EVENTO PER SALVARE ---
+        private async void menuSalva_Click(object sender, EventArgs e)
+        {
+            // 1. Apri una finestra di dialogo per "Salvare"
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = "File JSON (*.json)|*.json|Tutti i file (*.*)|*.*";
+            dialog.Title = "Salva anagrafica";
+
+            // 2. Se l'utente clicca "OK"
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                // 3. Prendi il percorso del file scelto
+                string percorsoFile = dialog.FileName;
+
+                try
+                {
+                    // 4. Converti la nostra lista 'anagrafica' in una stringa JSON
+                    // (WriteIndented = true la formatta in modo leggibile)
+                    var opzioniJson = new JsonSerializerOptions { WriteIndented = true };
+                    string jsonString = JsonSerializer.Serialize(anagrafica, opzioniJson);
+
+                    // 5. Salva la stringa sul file (in modo asincrono)
+                    await File.WriteAllTextAsync(percorsoFile, jsonString);
+
+                    MessageBox.Show("Dati salvati con successo!", "Salvataggio", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    // Gestisci eventuali errori di salvataggio
+                    MessageBox.Show($"Errore durante il salvataggio: {ex.Message}", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        // --- EVENTO PER CARICARE ---
+        private async void menuCarica_Click(object sender, EventArgs e)
+        {
+            // 1. Apri una finestra di dialogo per "Aprire"
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "File JSON (*.json)|*.json|Tutti i file (*.*)|*.*";
+            dialog.Title = "Carica anagrafica";
+
+            // 2. Se l'utente clicca "OK"
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                // 3. Prendi il percorso del file scelto
+                string percorsoFile = dialog.FileName;
+
+                // È FONDAMENTALE usare try...catch per il caricamento,
+                // il file potrebbe essere corrotto o non esistere!
+                try
+                {
+                    // 4. Leggi tutto il testo dal file (in modo asincrono)
+                    string jsonString = await File.ReadAllTextAsync(percorsoFile);
+
+                    // 5. Converti la stringa JSON di nuovo in una List<Persona>
+                    List<Persona> listaCaricata = JsonSerializer.Deserialize<List<Persona>>(jsonString);
+
+                    // 6. Sostituisci l'anagrafica attuale con quella caricata
+                    anagrafica = listaCaricata;
+
+                    // 7. Aggiorna la ListBox e pulisci i campi
+                    AggiornaListBox(anagrafica);
+                    PulisciCampi();
+
+                    MessageBox.Show("Dati caricati con successo!", "Caricamento", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    // Gestisci errori di caricamento (file non trovato, JSON non valido, ecc.)
+                    MessageBox.Show($"Errore durante il caricamento: {ex.Message}", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        // --- EVENTO PER USCIRE ---
+        private void menuEsci_Click(object sender, EventArgs e)
+        {
+            // Chiude l'applicazione
+            this.Close();
         }
 
         #endregion
