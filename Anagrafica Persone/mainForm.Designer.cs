@@ -1,6 +1,6 @@
 ﻿namespace Anagrafica_Persone
 {
-    partial class MainForm
+    partial class mainForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -30,7 +30,7 @@
         {
             txtCognome = new TextBox();
             lstPersone = new ListBox();
-            label1 = new Label();
+            lblCognome = new Label();
             lblNome = new Label();
             txtNome = new TextBox();
             dtpDataNascita = new DateTimePicker();
@@ -53,124 +53,138 @@
             // 
             // txtCognome
             // 
-            txtCognome.Location = new Point(12, 129);
+            txtCognome.Location = new Point(11, 66);
+            txtCognome.Margin = new Padding(2, 1, 2, 1);
             txtCognome.Name = "txtCognome";
-            txtCognome.Size = new Size(400, 42);
-            txtCognome.TabIndex = 0;
+            txtCognome.Size = new Size(202, 23);
+            txtCognome.TabIndex = 2;
             // 
             // lstPersone
             // 
             lstPersone.FormattingEnabled = true;
-            lstPersone.ItemHeight = 36;
-            lstPersone.Location = new Point(872, 120);
+            lstPersone.ItemHeight = 15;
+            lstPersone.Location = new Point(436, 50);
+            lstPersone.Margin = new Padding(2, 1, 2, 1);
             lstPersone.Name = "lstPersone";
-            lstPersone.Size = new Size(607, 796);
-            lstPersone.TabIndex = 9;
+            lstPersone.Size = new Size(306, 334);
+            lstPersone.TabIndex = 14;
             lstPersone.SelectedIndexChanged += lstPersone_SelectedIndexChanged;
             // 
-            // label1
+            // lblCognome
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(12, 90);
-            label1.Name = "label1";
-            label1.Size = new Size(127, 36);
-            label1.TabIndex = 2;
-            label1.Text = "Cognome";
+            lblCognome.AutoSize = true;
+            lblCognome.Location = new Point(11, 50);
+            lblCognome.Margin = new Padding(2, 0, 2, 0);
+            lblCognome.Name = "lblCognome";
+            lblCognome.Size = new Size(60, 15);
+            lblCognome.TabIndex = 1;
+            lblCognome.Text = "&Cognome";
             // 
             // lblNome
             // 
             lblNome.AutoSize = true;
-            lblNome.Location = new Point(12, 191);
+            lblNome.Location = new Point(11, 92);
+            lblNome.Margin = new Padding(2, 0, 2, 0);
             lblNome.Name = "lblNome";
-            lblNome.Size = new Size(85, 36);
-            lblNome.TabIndex = 4;
-            lblNome.Text = "Nome";
+            lblNome.Size = new Size(40, 15);
+            lblNome.TabIndex = 3;
+            lblNome.Text = "&Nome";
             // 
             // txtNome
             // 
-            txtNome.Location = new Point(12, 230);
+            txtNome.Location = new Point(11, 108);
+            txtNome.Margin = new Padding(2, 1, 2, 1);
             txtNome.Name = "txtNome";
-            txtNome.Size = new Size(400, 42);
-            txtNome.TabIndex = 1;
+            txtNome.Size = new Size(202, 23);
+            txtNome.TabIndex = 4;
             // 
             // dtpDataNascita
             // 
-            dtpDataNascita.Location = new Point(12, 336);
+            dtpDataNascita.Location = new Point(11, 152);
+            dtpDataNascita.Margin = new Padding(2, 1, 2, 1);
             dtpDataNascita.Name = "dtpDataNascita";
-            dtpDataNascita.Size = new Size(400, 42);
-            dtpDataNascita.TabIndex = 2;
+            dtpDataNascita.Size = new Size(202, 23);
+            dtpDataNascita.TabIndex = 6;
             // 
             // lblDataNascita
             // 
             lblDataNascita.AutoSize = true;
-            lblDataNascita.Location = new Point(12, 297);
+            lblDataNascita.Location = new Point(11, 136);
+            lblDataNascita.Margin = new Padding(2, 0, 2, 0);
             lblDataNascita.Name = "lblDataNascita";
-            lblDataNascita.Size = new Size(182, 36);
-            lblDataNascita.TabIndex = 6;
+            lblDataNascita.Size = new Size(84, 15);
+            lblDataNascita.TabIndex = 5;
             lblDataNascita.Text = "Data di nascita";
             // 
             // txtRicerca
             // 
-            txtRicerca.Location = new Point(12, 452);
+            txtRicerca.Location = new Point(11, 200);
+            txtRicerca.Margin = new Padding(2, 1, 2, 1);
             txtRicerca.Name = "txtRicerca";
-            txtRicerca.Size = new Size(400, 42);
-            txtRicerca.TabIndex = 3;
+            txtRicerca.Size = new Size(202, 23);
+            txtRicerca.TabIndex = 8;
             // 
             // lblRicerca
             // 
             lblRicerca.AutoSize = true;
-            lblRicerca.Location = new Point(12, 413);
+            lblRicerca.Location = new Point(11, 184);
+            lblRicerca.Margin = new Padding(2, 0, 2, 0);
             lblRicerca.Name = "lblRicerca";
-            lblRicerca.Size = new Size(97, 36);
-            lblRicerca.TabIndex = 8;
+            lblRicerca.Size = new Size(45, 15);
+            lblRicerca.TabIndex = 7;
             lblRicerca.Text = "Ricerca";
             // 
             // btnAggiungi
             // 
-            btnAggiungi.Location = new Point(12, 569);
+            btnAggiungi.Location = new Point(11, 249);
+            btnAggiungi.Margin = new Padding(2, 1, 2, 1);
             btnAggiungi.Name = "btnAggiungi";
-            btnAggiungi.Size = new Size(150, 46);
-            btnAggiungi.TabIndex = 5;
+            btnAggiungi.Size = new Size(75, 23);
+            btnAggiungi.TabIndex = 10;
             btnAggiungi.Text = "Aggiungi";
             btnAggiungi.UseVisualStyleBackColor = true;
             btnAggiungi.Click += btnAggiungi_Click;
             // 
             // btnModifica
             // 
-            btnModifica.Location = new Point(168, 569);
+            btnModifica.Location = new Point(89, 249);
+            btnModifica.Margin = new Padding(2, 1, 2, 1);
             btnModifica.Name = "btnModifica";
-            btnModifica.Size = new Size(150, 46);
-            btnModifica.TabIndex = 6;
+            btnModifica.Size = new Size(75, 23);
+            btnModifica.TabIndex = 11;
             btnModifica.Text = "Modifica";
             btnModifica.UseVisualStyleBackColor = true;
             btnModifica.Click += btnModifica_Click;
             // 
             // btnCancella
             // 
-            btnCancella.Location = new Point(324, 569);
+            btnCancella.Location = new Point(167, 249);
+            btnCancella.Margin = new Padding(2, 1, 2, 1);
             btnCancella.Name = "btnCancella";
-            btnCancella.Size = new Size(150, 46);
-            btnCancella.TabIndex = 7;
+            btnCancella.Size = new Size(75, 23);
+            btnCancella.TabIndex = 12;
             btnCancella.Text = "Cancella";
             btnCancella.UseVisualStyleBackColor = true;
             btnCancella.Click += btnCancella_Click;
             // 
             // btnPulisciCampi
             // 
-            btnPulisciCampi.Location = new Point(480, 569);
+            btnPulisciCampi.Location = new Point(245, 249);
+            btnPulisciCampi.Margin = new Padding(2, 1, 2, 1);
             btnPulisciCampi.Name = "btnPulisciCampi";
-            btnPulisciCampi.Size = new Size(175, 46);
-            btnPulisciCampi.TabIndex = 8;
+            btnPulisciCampi.Size = new Size(88, 23);
+            btnPulisciCampi.TabIndex = 13;
             btnPulisciCampi.Text = "Pulisci Campi";
             btnPulisciCampi.UseVisualStyleBackColor = true;
             btnPulisciCampi.Click += btnPulisciCampi_Click;
             // 
             // btnRicerca
             // 
-            btnRicerca.Location = new Point(427, 450);
+            btnRicerca.Location = new Point(219, 200);
+            btnRicerca.Margin = new Padding(2, 1, 2, 1);
             btnRicerca.Name = "btnRicerca";
-            btnRicerca.Size = new Size(150, 46);
-            btnRicerca.TabIndex = 4;
+            btnRicerca.Size = new Size(75, 23);
+            btnRicerca.TabIndex = 9;
             btnRicerca.Text = "Ricerca";
             btnRicerca.UseVisualStyleBackColor = true;
             btnRicerca.Click += btnRicerca_Click;
@@ -181,47 +195,48 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { filToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(1491, 44);
-            menuStrip1.TabIndex = 10;
+            menuStrip1.Padding = new Padding(3, 1, 0, 1);
+            menuStrip1.Size = new Size(746, 24);
+            menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             // 
             // filToolStripMenuItem
             // 
             filToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { menuSalva, menuCarica, toolStripMenuItem1, menuEsci });
             filToolStripMenuItem.Name = "filToolStripMenuItem";
-            filToolStripMenuItem.Size = new Size(74, 40);
+            filToolStripMenuItem.Size = new Size(37, 22);
             filToolStripMenuItem.Text = "File";
             // 
             // menuSalva
             // 
             menuSalva.Name = "menuSalva";
-            menuSalva.Size = new Size(359, 44);
+            menuSalva.Size = new Size(167, 22);
             menuSalva.Text = "Salva con nome...";
             menuSalva.Click += menuSalva_Click;
             // 
             // menuCarica
             // 
             menuCarica.Name = "menuCarica";
-            menuCarica.Size = new Size(359, 44);
+            menuCarica.Size = new Size(167, 22);
             menuCarica.Text = "Carica...";
             menuCarica.Click += menuCarica_Click;
             // 
             // toolStripMenuItem1
             // 
             toolStripMenuItem1.Name = "toolStripMenuItem1";
-            toolStripMenuItem1.Size = new Size(356, 6);
+            toolStripMenuItem1.Size = new Size(164, 6);
             // 
             // menuEsci
             // 
             menuEsci.Name = "menuEsci";
-            menuEsci.Size = new Size(359, 44);
+            menuEsci.Size = new Size(167, 22);
             menuEsci.Text = "Esci";
             // 
-            // MainForm
+            // mainForm
             // 
-            AutoScaleDimensions = new SizeF(14F, 36F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1491, 934);
+            ClientSize = new Size(746, 389);
             Controls.Add(btnRicerca);
             Controls.Add(btnPulisciCampi);
             Controls.Add(btnCancella);
@@ -233,12 +248,13 @@
             Controls.Add(dtpDataNascita);
             Controls.Add(lblNome);
             Controls.Add(txtNome);
-            Controls.Add(label1);
+            Controls.Add(lblCognome);
             Controls.Add(lstPersone);
             Controls.Add(txtCognome);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
-            Name = "MainForm";
+            Margin = new Padding(2, 1, 2, 1);
+            Name = "mainForm";
             Text = "Anagrafica";
             Load += Form1_Load;
             menuStrip1.ResumeLayout(false);
@@ -251,7 +267,7 @@
 
         private TextBox txtCognome;
         private ListBox lstPersone;
-        private Label label1;
+        private Label lblCognome;
         private Label lblNome;
         private TextBox txtNome;
         private DateTimePicker dtpDataNascita;

@@ -13,11 +13,11 @@ using System.Windows.Forms;
 
 namespace Anagrafica_Persone
 {
-    public partial class MainForm : Form
+    public partial class mainForm : Form
     {
         private List<Persona> anagrafica = new List<Persona>();
 
-        public MainForm()
+        public mainForm()
         {
             InitializeComponent();
         }
@@ -67,6 +67,7 @@ namespace Anagrafica_Persone
             anagrafica.Add(nuovaPersona);
             AggiornaListBox(anagrafica);
             PulisciCampi();
+            txtCognome.Focus();
         }
 
         private void btnModifica_Click(object sender, EventArgs e)
@@ -91,6 +92,7 @@ namespace Anagrafica_Persone
 
             AggiornaListBox(anagrafica);
             PulisciCampi();
+            txtCognome.Focus();
         }
 
         private void btnCancella_Click(object sender, EventArgs e)

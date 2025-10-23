@@ -41,7 +41,7 @@ namespace Anagrafica_Persone
 
         public override string ToString()
         {
-            string dataFormattata = DataNascita.ToString("dd/MM/yyyy");
+            string dataFormattata = DataNascita.ToString("d");
             return $"{Cognome}, {Nome} (Nato il: {dataFormattata}, Età: {Eta})";
         }
     }
