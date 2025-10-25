@@ -1,16 +1,14 @@
-using System.IO; // Per leggere e scrivere file
-using System.Text.Json; // Per la serializzazione JSON
-using System.Text; // Serve per lo StringBuilder (costruire il file CSV)
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+using System.IO;        // Per leggere e scrivere file
+using System.Text;      // Serve per lo StringBuilder (costruire il file CSV)
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing;
+using System.Text.Json; // Per la serializzazione JSON
 using System.Windows.Forms;
-
+using System.ComponentModel;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Anagrafica_Persone
 {
@@ -25,11 +23,11 @@ namespace Anagrafica_Persone
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            anagrafica.Add(new Persona("Mario", "Rossi", new DateTime(1990, 5, 15)));
-            anagrafica.Add(new Persona("Luca", "Bianchi", new DateTime(1985, 11, 22)));
-            anagrafica.Add(new Persona("Anna", "Verdi", new DateTime(2001, 1, 30)));
+            //anagrafica.Add(new Persona("Mario", "Rossi", new DateTime(1990, 5, 15)));
+            //anagrafica.Add(new Persona("Luca", "Bianchi", new DateTime(1985, 11, 22)));
+            //anagrafica.Add(new Persona("Anna", "Verdi", new DateTime(2001, 1, 30)));
 
-            AggiornaListBox(anagrafica);
+            //AggiornaListBox(anagrafica);
             txtCognome.Focus();
         }
 
@@ -122,8 +120,6 @@ namespace Anagrafica_Persone
         {
             AggiornaListBox(anagrafica);
             PulisciCampi();
-            txtCognome.Focus();
-
         }
 
         private void btnRicerca_Click(object sender, EventArgs e)
