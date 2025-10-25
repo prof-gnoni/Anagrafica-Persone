@@ -159,7 +159,7 @@ namespace Anagrafica_Persone
         // (Questo codice va incollato dentro la classe Form1)
 
         // --- EVENTO PER SALVARE ---
-        private async void menuSalvaJSON_Click(object sender, EventArgs e)
+        private /*async*/ void menuSalvaJSON_Click(object sender, EventArgs e)
         {
             // 1. Apri una finestra di dialogo per "Salvare"
             SaveFileDialog dialog = new SaveFileDialog();
@@ -180,7 +180,8 @@ namespace Anagrafica_Persone
                     string jsonString = JsonSerializer.Serialize(anagrafica, opzioniJson);
 
                     // 5. Salva la stringa sul file (in modo asincrono)
-                    await File.WriteAllTextAsync(percorsoFile, jsonString);
+                    // await File.WriteAllTextAsync(percorsoFile, jsonString);
+                    File.WriteAllText(percorsoFile, jsonString);
 
                     MessageBox.Show("Dati salvati con successo!", "Salvataggio", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -193,7 +194,7 @@ namespace Anagrafica_Persone
         }
 
         // --- EVENTO PER CARICARE ---
-        private async void menuCaricaJSON_Click(object sender, EventArgs e)
+        private /*async*/ void menuCaricaJSON_Click(object sender, EventArgs e)
         {
             // 1. Apri una finestra di dialogo per "Aprire"
             OpenFileDialog dialog = new OpenFileDialog();
@@ -211,7 +212,8 @@ namespace Anagrafica_Persone
                 try
                 {
                     // 4. Leggi tutto il testo dal file (in modo asincrono)
-                    string jsonString = await File.ReadAllTextAsync(percorsoFile);
+                    //string jsonString = await File.ReadAllTextAsync(percorsoFile);
+                    string jsonString = File.ReadAllText(percorsoFile);
 
                     // 5. Converti la stringa JSON di nuovo in una List<Persona>
                     List<Persona> listaCaricata = JsonSerializer.Deserialize<List<Persona>>(jsonString);
@@ -234,7 +236,7 @@ namespace Anagrafica_Persone
         }
 
         
-        private async void menuCaricaCSV_Click(object sender, EventArgs e)
+        private /*async*/ void menuCaricaCSV_Click(object sender, EventArgs e)
         {
             // 1. Apri la finestra di dialogo per aprire
             OpenFileDialog dialog = new OpenFileDialog();
@@ -249,7 +251,8 @@ namespace Anagrafica_Persone
                 try
                 {
                     // 2. Leggi tutte le righe dal file
-                    string[] righe = await File.ReadAllLinesAsync(percorsoFile);
+                    //string[] righe = await File.ReadAllLinesAsync(percorsoFile);
+                    string[] righe = File.ReadAllLines(percorsoFile);
 
                     // 3. Itera sulle righe, *saltando la prima riga (header)*
                     // Partiamo da i = 1
@@ -296,7 +299,7 @@ namespace Anagrafica_Persone
                 }
             }
         }
-        private async void menuSalvaCSV_Click(object sender, EventArgs e)
+        private /*async*/ void menuSalvaCSV_Click(object sender, EventArgs e)
         {
             // 1. Apri la finestra di dialogo per salvare
             SaveFileDialog dialog = new SaveFileDialog();
@@ -317,7 +320,8 @@ namespace Anagrafica_Persone
                         sb.AppendLine($"{persona.Id};{persona.Nome};{persona.Cognome};{persona.DataNascita.ToString("o")}");
                     }
                     // 4. Salva il contenuto nel file
-                    await File.WriteAllTextAsync(percorsoFile, sb.ToString());
+                    //await File.WriteAllTextAsync(percorsoFile, sb.ToString());
+                    File.WriteAllText(percorsoFile, sb.ToString());
                     MessageBox.Show("Dati salvati in CSV con successo!", "Salvataggio CSV", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)
@@ -328,7 +332,7 @@ namespace Anagrafica_Persone
         }
 
         // --- EVENTO PER CARICARE DA CSV ---
-        private async void menuCaricaCsv_Click(object sender, EventArgs e)
+        private /*async*/ void menuCaricaCsv_Click(object sender, EventArgs e)
         {
             // 1. Apri la finestra di dialogo per aprire
             OpenFileDialog dialog = new OpenFileDialog();
@@ -343,7 +347,8 @@ namespace Anagrafica_Persone
                 try
                 {
                     // 2. Leggi tutte le righe dal file
-                    string[] righe = await File.ReadAllLinesAsync(percorsoFile);
+                    //string[] righe = await File.ReadAllLinesAsync(percorsoFile);
+                    string[] righe = File.ReadAllLines(percorsoFile);
 
                     // 3. Itera sulle righe, *saltando la prima riga (header)*
                     // Partiamo da i = 1
@@ -398,6 +403,5 @@ namespace Anagrafica_Persone
             this.Close();
         }
     }
-
     #endregion
 }
