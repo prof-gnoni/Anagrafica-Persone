@@ -1,5 +1,6 @@
 using System.IO; // Per leggere e scrivere file
 using System.Text.Json; // Per la serializzazione JSON
+using System.Text; // Serve per lo StringBuilder (costruire il file CSV)
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -47,6 +48,7 @@ namespace Anagrafica_Persone
             dtpDataNascita.Value = DateTime.Now;
             txtRicerca.Text = "";
             lstPersone.SelectedIndex = -1;
+            txtCognome.Focus();
         }
 
         #endregion
@@ -67,7 +69,6 @@ namespace Anagrafica_Persone
             anagrafica.Add(nuovaPersona);
             AggiornaListBox(anagrafica);
             PulisciCampi();
-            txtCognome.Focus();
         }
 
         private void btnModifica_Click(object sender, EventArgs e)
@@ -92,7 +93,6 @@ namespace Anagrafica_Persone
 
             AggiornaListBox(anagrafica);
             PulisciCampi();
-            txtCognome.Focus();
         }
 
         private void btnCancella_Click(object sender, EventArgs e)
@@ -159,7 +159,7 @@ namespace Anagrafica_Persone
         // (Questo codice va incollato dentro la classe Form1)
 
         // --- EVENTO PER SALVARE ---
-        private async void menuSalva_Click(object sender, EventArgs e)
+        private async void menuSalvaJSON_Click(object sender, EventArgs e)
         {
             // 1. Apri una finestra di dialogo per "Salvare"
             SaveFileDialog dialog = new SaveFileDialog();
@@ -193,7 +193,7 @@ namespace Anagrafica_Persone
         }
 
         // --- EVENTO PER CARICARE ---
-        private async void menuCarica_Click(object sender, EventArgs e)
+        private async void menuCaricaJSON_Click(object sender, EventArgs e)
         {
             // 1. Apri una finestra di dialogo per "Aprire"
             OpenFileDialog dialog = new OpenFileDialog();
@@ -233,13 +233,171 @@ namespace Anagrafica_Persone
             }
         }
 
+        
+        private async void menuCaricaCSV_Click(object sender, EventArgs e)
+        {
+            // 1. Apri la finestra di dialogo per aprire
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "File CSV (*.csv)|*.csv|Tutti i file (*.*)|*.*";
+            dialog.Title = "Carica anagrafica da CSV";
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                string percorsoFile = dialog.FileName;
+                List<Persona> listaCaricata = new List<Persona>();
+
+                try
+                {
+                    // 2. Leggi tutte le righe dal file
+                    string[] righe = await File.ReadAllLinesAsync(percorsoFile);
+
+                    // 3. Itera sulle righe, *saltando la prima riga (header)*
+                    // Partiamo da i = 1
+                    for (int i = 1; i < righe.Length; i++)
+                    {
+                        string riga = righe[i];
+                        if (string.IsNullOrWhiteSpace(riga)) continue; // Salta righe vuote
+
+                        // 4. Dividi la riga usando il separatore ';'
+                        string[] campi = riga.Split(';');
+
+                        // 5. Controlla che la riga sia ben formata
+                        if (campi.Length == 4)
+                        {
+                            try
+                            {
+                                // 6. Ricrea l'oggetto Persona
+                                Guid id = Guid.Parse(campi[0]);
+                                string nome = campi[1];
+                                string cognome = campi[2];
+                                DateTime dataNascita = DateTime.Parse(campi[3]); // Funziona grazie al formato "o"
+
+                                // 7. Usa il NUOVO costruttore per preservare l'ID
+                                listaCaricata.Add(new Persona(id, nome, cognome, dataNascita));
+                            }
+                            catch (Exception ex)
+                            {
+                                // Se una riga è malformata, la saltiamo e andiamo avanti
+                                Console.WriteLine($"Errore nel parsing della riga CSV: {ex.Message}");
+                            }
+                        }
+                    }
+
+                    // 8. Sostituisci l'anagrafica
+                    anagrafica = listaCaricata;
+                    AggiornaListBox(anagrafica);
+                    PulisciCampi();
+
+                    MessageBox.Show($"Dati CSV caricati con successo. Trovate {anagrafica.Count} persone.", "Caricamento CSV", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Errore durante il caricamento CSV: {ex.Message}", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+        private async void menuSalvaCSV_Click(object sender, EventArgs e)
+        {
+            // 1. Apri la finestra di dialogo per salvare
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = "File CSV (*.csv)|*.csv|Tutti i file (*.*)|*.*";
+            dialog.Title = "Salva anagrafica in CSV";
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                string percorsoFile = dialog.FileName;
+                try
+                {
+                    StringBuilder sb = new StringBuilder();
+                    // 2. Scrivi l'header
+                    sb.AppendLine("Id;Nome;Cognome;DataNascita");
+                    // 3. Scrivi ogni persona in una riga
+                    foreach (var persona in anagrafica)
+                    {
+                        // Usa il formato "o" per DataNascita per garantire la precisione
+                        sb.AppendLine($"{persona.Id};{persona.Nome};{persona.Cognome};{persona.DataNascita.ToString("o")}");
+                    }
+                    // 4. Salva il contenuto nel file
+                    await File.WriteAllTextAsync(percorsoFile, sb.ToString());
+                    MessageBox.Show("Dati salvati in CSV con successo!", "Salvataggio CSV", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Errore durante il salvataggio CSV: {ex.Message}", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        // --- EVENTO PER CARICARE DA CSV ---
+        private async void menuCaricaCsv_Click(object sender, EventArgs e)
+        {
+            // 1. Apri la finestra di dialogo per aprire
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "File CSV (*.csv)|*.csv|Tutti i file (*.*)|*.*";
+            dialog.Title = "Carica anagrafica da CSV";
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                string percorsoFile = dialog.FileName;
+                List<Persona> listaCaricata = new List<Persona>();
+
+                try
+                {
+                    // 2. Leggi tutte le righe dal file
+                    string[] righe = await File.ReadAllLinesAsync(percorsoFile);
+
+                    // 3. Itera sulle righe, *saltando la prima riga (header)*
+                    // Partiamo da i = 1
+                    for (int i = 1; i < righe.Length; i++)
+                    {
+                        string riga = righe[i];
+                        if (string.IsNullOrWhiteSpace(riga)) continue; // Salta righe vuote
+
+                        // 4. Dividi la riga usando il separatore ';'
+                        string[] campi = riga.Split(';');
+
+                        // 5. Controlla che la riga sia ben formata
+                        if (campi.Length == 4)
+                        {
+                            try
+                            {
+                                // 6. Ricrea l'oggetto Persona
+                                Guid id = Guid.Parse(campi[0]);
+                                string nome = campi[1];
+                                string cognome = campi[2];
+                                DateTime dataNascita = DateTime.Parse(campi[3]); // Funziona grazie al formato "o"
+
+                                // 7. Usa il NUOVO costruttore per preservare l'ID
+                                listaCaricata.Add(new Persona(id, nome, cognome, dataNascita));
+                            }
+                            catch (Exception ex)
+                            {
+                                // Se una riga è malformata, la saltiamo e andiamo avanti
+                                Console.WriteLine($"Errore nel parsing della riga CSV: {ex.Message}");
+                            }
+                        }
+                    }
+
+                    // 8. Sostituisci l'anagrafica
+                    anagrafica = listaCaricata;
+                    AggiornaListBox(anagrafica);
+                    PulisciCampi();
+
+                    MessageBox.Show($"Dati CSV caricati con successo. Trovate {anagrafica.Count} persone.", "Caricamento CSV", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Errore durante il caricamento CSV: {ex.Message}", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
         // --- EVENTO PER USCIRE ---
         private void menuEsci_Click(object sender, EventArgs e)
         {
             // Chiude l'applicazione
             this.Close();
         }
-
-        #endregion
     }
+
+    #endregion
 }

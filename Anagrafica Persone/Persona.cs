@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+// Aggiungi questo using per l'attributo [JsonConstructor]
+using System.Text.Json.Serialization;
 
 namespace Anagrafica_Persone
 {
@@ -15,9 +9,9 @@ namespace Anagrafica_Persone
         public Guid Id { get; private set; }
         public string Nome { get; set; }
         public string Cognome { get; set; }
-
         public DateTime DataNascita { get; set; }
 
+        // (La tua proprietà 'Eta' e 'ToString' rimangono invariate...)
         public int Eta
         {
             get
@@ -31,18 +25,35 @@ namespace Anagrafica_Persone
             }
         }
 
+        public override string ToString()
+        {
+            string dataFormattata = DataNascita.ToString("dd/MM/yyyy");
+            return $"{Cognome}, {Nome} (Nato il: {dataFormattata}, Età: {Eta})";
+        }
+
+        // ---
+        // 1. COSTRUTTORE PER *NUOVE* PERSONE
+        // (Usato dal pulsante 'btnAggiungi')
+        // ---
         public Persona(string nome, string cognome, DateTime dataNascita)
         {
-            Id = Guid.NewGuid();
+            Id = Guid.NewGuid(); // Crea un ID completamente nuovo
             Nome = nome;
             Cognome = cognome;
             DataNascita = dataNascita;
         }
 
-        public override string ToString()
+        // ---
+        // 2. NUOVO COSTRUTTORE PER *CARICARE* PERSONE
+        // (Usato dal Caricamento JSON e dal nuovo Caricamento CSV)
+        // ---
+        [JsonConstructor] // Questo dice al deserializzatore JSON di usare questo
+        public Persona(Guid id, string nome, string cognome, DateTime dataNascita)
         {
-            string dataFormattata = DataNascita.ToString("d");
-            return $"{Cognome}, {Nome} (Nato il: {dataFormattata}, Età: {Eta})";
+            Id = id; // Preserva l'ID originale letto dal file
+            Nome = nome;
+            Cognome = cognome;
+            DataNascita = dataNascita;
         }
     }
 }
