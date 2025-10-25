@@ -177,6 +177,7 @@ namespace Anagrafica_Persone
 
                     // 5. Salva la stringa sul file (in modo asincrono)
                     // await File.WriteAllTextAsync(percorsoFile, jsonString);
+                    // 5. Salva la stringa sul file
                     File.WriteAllText(percorsoFile, jsonString);
 
                     MessageBox.Show("Dati salvati con successo!", "Salvataggio", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -203,12 +204,13 @@ namespace Anagrafica_Persone
                 // 3. Prendi il percorso del file scelto
                 string percorsoFile = dialog.FileName;
 
-                // È FONDAMENTALE usare try...catch per il caricamento,
+                // Ãˆ FONDAMENTALE usare try...catch per il caricamento,
                 // il file potrebbe essere corrotto o non esistere!
                 try
                 {
                     // 4. Leggi tutto il testo dal file (in modo asincrono)
                     //string jsonString = await File.ReadAllTextAsync(percorsoFile);
+                    // 4. Leggi tutto il testo dal file
                     string jsonString = File.ReadAllText(percorsoFile);
 
                     // 5. Converti la stringa JSON di nuovo in una List<Persona>
@@ -276,7 +278,7 @@ namespace Anagrafica_Persone
                             }
                             catch (Exception ex)
                             {
-                                // Se una riga è malformata, la saltiamo e andiamo avanti
+                                // Se una riga Ã¨ malformata, la saltiamo e andiamo avanti
                                 Console.WriteLine($"Errore nel parsing della riga CSV: {ex.Message}");
                             }
                         }
@@ -372,7 +374,7 @@ namespace Anagrafica_Persone
                             }
                             catch (Exception ex)
                             {
-                                // Se una riga è malformata, la saltiamo e andiamo avanti
+                                // Se una riga Ã¨ malformata, la saltiamo e andiamo avanti
                                 Console.WriteLine($"Errore nel parsing della riga CSV: {ex.Message}");
                             }
                         }
